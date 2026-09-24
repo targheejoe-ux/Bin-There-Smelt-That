@@ -1,0 +1,451 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Bin There, Smelt That | Trash Bin Cleaning Services</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <style>
+        body { font-family: 'Plus Jakarta Sans', sans-serif; }
+
+        /* Trash Can Repeating Wallpaper Pattern */
+        .trash-pattern-bg {
+            background-color: #f1f5f9;
+            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' width='40' height='40'%3E%3Cpath fill='%2310b981' fill-opacity='0.08' d='M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16'/%3E%3C/svg%3E");
+            background-size: 64px 64px;
+        }
+
+        /* Before / After Slider Styles */
+        .slider-container {
+            position: relative;
+            width: 100%;
+            max-width: 700px;
+            height: 400px;
+            overflow: hidden;
+            border-radius: 1.5rem;
+            box-shadow: 0 20px 25px -5px rgb(0 0 0 / 0.1);
+            user-select: none;
+            margin: 0 auto;
+        }
+        .slider-img {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-size: cover;
+            background-position: center;
+            pointer-events: none;
+        }
+        .slider-before {
+            background-image: url('https://images.unsplash.com/photo-1532996122724-e3c3fa4a0a55?auto=format&fit=crop&w=1000&q=80');
+            filter: brightness(0.6) sepia(0.2);
+        }
+        .slider-after {
+            background-image: url('https://images.unsplash.com/photo-1581578731548-c64695cc6952?auto=format&fit=crop&w=1000&q=80');
+            width: 50%;
+            z-index: 2;
+        }
+        .slider-handle {
+            position: absolute;
+            top: 0;
+            bottom: 0;
+            left: 50%;
+            width: 4px;
+            background: #10b981;
+            z-index: 3;
+            pointer-events: none;
+        }
+        .slider-button {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 44px;
+            height: 44px;
+            background: #10b981;
+            border: 3px solid white;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-weight: bold;
+            box-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.2);
+            pointer-events: none;
+        }
+        .slider-input {
+            position: absolute;
+            inset: 0;
+            opacity: 0;
+            cursor: ew-resize;
+            z-index: 10;
+            width: 100%;
+            height: 100%;
+            margin: 0;
+        }
+        .label-badge {
+            position: absolute;
+            bottom: 20px;
+            padding: 6px 14px;
+            background: rgba(0, 0, 0, 0.7);
+            color: white;
+            font-size: 12px;
+            font-weight: 700;
+            border-radius: 9999px;
+            z-index: 4;
+            pointer-events: none;
+            letter-spacing: 0.05em;
+            text-transform: uppercase;
+        }
+        .label-before { right: 20px; }
+        .label-after { left: 20px; background: #10b981; color: #022c22; }
+    </style>
+</head>
+<body class="bg-white text-slate-800 antialiased selection:bg-emerald-500 selection:text-white">
+
+    <!-- Header / Navbar -->
+    <header class="sticky top-0 z-50 bg-white/95 backdrop-blur-md border-b border-slate-200 shadow-sm">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-20 flex items-center justify-between">
+            <div class="flex items-center space-x-3">
+                <div class="bg-emerald-600 p-2.5 rounded-xl shadow-lg shadow-emerald-600/20">
+                    <svg class="w-7 h-7 text-white font-bold" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"></path>
+                    </svg>
+                </div>
+                <div>
+                    <span class="text-xl sm:text-2xl font-extrabold tracking-tight text-slate-900">Bin There, Smelt That</span>
+                    <span class="block text-xs font-semibold text-emerald-600 tracking-wider uppercase">Trash Bin Cleaning</span>
+                </div>
+            </div>
+            <nav class="hidden md:flex items-center space-x-8 text-sm font-medium">
+                <a href="#services" class="text-slate-600 hover:text-emerald-600 transition">Services & Pricing</a>
+                <a href="#transform" class="text-slate-600 hover:text-emerald-600 transition">Before & After</a>
+                <a href="#neighbor-special" class="text-slate-600 hover:text-emerald-600 transition">Neighbor Special</a>
+            </nav>
+            <div>
+                <a href="#booking" class="bg-emerald-600 hover:bg-emerald-500 text-white font-bold px-5 py-2.5 rounded-xl shadow-lg shadow-emerald-600/20 transition transform hover:-translate-y-0.5">
+                    Book Clean
+                </a>
+            </div>
+        </div>
+    </header>
+
+    <!-- Hero Section (Plain White) -->
+    <section class="relative overflow-hidden pt-16 pb-24 lg:pt-24 lg:pb-32 bg-white border-b border-slate-200">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+            <div class="text-center max-w-3xl mx-auto">
+                <span class="inline-flex items-center space-x-2 bg-emerald-100 border border-emerald-200 text-emerald-700 px-4 py-1.5 rounded-full text-xs font-semibold uppercase tracking-wider mb-6 shadow-sm">
+                    <span class="w-2 h-2 rounded-full bg-emerald-500 animate-pulse"></span>
+                    <span>Say goodbye to maggots, bad odors, and grime</span>
+                </span>
+                <h1 class="text-4xl sm:text-6xl font-extrabold text-slate-900 tracking-tight leading-tight mb-6">
+                    Your neighbors' bins smell great. <span class="text-emerald-600">Yours should too.</span>
+                </h1>
+                <p class="text-lg sm:text-xl text-slate-600 mb-10 leading-relaxed">
+                    High-pressure washing leaves your bins sanitized and smelling minty fresh.
+                </p>
+                <div class="flex flex-col sm:flex-row items-center justify-center gap-4">
+                    <a href="#booking" class="w-full sm:w-auto bg-emerald-600 hover:bg-emerald-500 text-white font-bold text-lg px-8 py-4 rounded-xl shadow-xl shadow-emerald-600/20 transition transform hover:-translate-y-0.5 text-center">
+                        Schedule Your Clean Now
+                    </a>
+                    <a href="#transform" class="w-full sm:w-auto bg-slate-100 hover:bg-slate-200 text-slate-800 font-semibold text-lg px-8 py-4 rounded-xl border border-slate-300 shadow-sm transition text-center">
+                        See The Transformation
+                    </a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Before & After Slider Section (Trash Wallpaper Pattern) -->
+    <section id="transform" class="py-24 trash-pattern-bg border-b border-slate-200">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center max-w-2xl mx-auto mb-16">
+                <h2 class="text-3xl sm:text-4xl font-extrabold text-slate-900 tracking-tight mb-4">See The Difference</h2>
+                <p class="text-slate-600 text-base sm:text-lg">Drag the slider left and right to reveal how thoroughly we remove years of built-up grime, bacteria, and foul odors.</p>
+            </div>
+
+            <!-- Slider Widget -->
+            <div class="slider-container">
+                <div class="slider-img slider-before"></div>
+                <div class="label-badge label-before">Before</div>
+
+                <div id="sliderAfter" class="slider-img slider-after"></div>
+                <div class="label-badge label-after">After</div>
+
+                <div id="sliderHandle" class="slider-handle">
+                    <div class="slider-button">
+                        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M8 9l4-4 4 4m0 6l-4 4-4-4"></path></svg>
+                    </div>
+                </div>
+
+                <input type="range" min="0" max="100" value="50" class="slider-input" id="sliderRange" oninput="moveSlider(this)">
+            </div>
+        </div>
+    </section>
+
+    <!-- Neighbor Special Banner -->
+    <section id="neighbor-special" class="py-12 bg-emerald-50 border-b border-emerald-200">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="bg-gradient-to-r from-emerald-600 to-emerald-700 p-8 sm:p-10 rounded-3xl text-white flex flex-col lg:flex-row items-center justify-between gap-8 shadow-xl">
+                <div class="space-y-3 text-center lg:text-left">
+                    <span class="bg-white text-emerald-800 text-xs font-black px-3 py-1 rounded-full uppercase tracking-wider">Block Party Promo</span>
+                    <h2 class="text-2xl sm:text-3xl font-extrabold">The Neighbor Special: Get 20% Off!</h2>
+                    <p class="text-emerald-100 max-w-xl text-sm sm:text-base">
+                        Team up with your neighbors! If <strong>three houses</strong> on the same street all sign up on the same day, everyone gets <strong>20% off</strong> their one-time clean.
+                    </p>
+                </div>
+                <a href="#booking" class="whitespace-nowrap bg-white hover:bg-emerald-50 text-emerald-900 font-extrabold px-6 py-3.5 rounded-xl transition shadow-md">
+                    Claim Neighbor Special
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Pricing & Services Section -->
+    <section id="services" class="py-24 bg-white">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center max-w-2xl mx-auto mb-16">
+                <h2 class="text-3xl sm:text-4xl font-extrabold text-slate-900 tracking-tight mb-4">Simple, Transparent Pricing</h2>
+                <p class="text-slate-600 text-base sm:text-lg">All cleanings cover up to 2 bins standard. Extra bins are just +$10 each.</p>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-8 max-w-5xl mx-auto">
+                <!-- One-Time Clean -->
+                <div class="bg-slate-50 border border-slate-200 rounded-3xl p-8 flex flex-col justify-between relative shadow-sm hover:shadow-md hover:border-emerald-400 transition">
+                    <div>
+                        <span class="text-xs font-semibold text-slate-500 uppercase tracking-wider">Single Service</span>
+                        <h3 class="text-xl font-bold text-slate-900 mt-1 mb-4">One-Time Clean</h3>
+                        <div class="mb-6">
+                            <span class="text-4xl font-extrabold text-slate-900">$40</span>
+                            <span class="text-slate-500 text-sm"> / 2 bins</span>
+                        </div>
+                        <ul class="space-y-3 text-sm text-slate-600 mb-8">
+                            <li class="flex items-center"><svg class="w-4 h-4 text-emerald-600 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M5 13l4 4L19 7"></path></svg>Covers up to 2 bins</li>
+                            <li class="flex items-center"><svg class="w-4 h-4 text-emerald-600 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M5 13l4 4L19 7"></path></svg>High-pressure deep wash</li>
+                            <li class="flex items-center"><svg class="w-4 h-4 text-emerald-600 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M5 13l4 4L19 7"></path></svg>Deodorized & sanitized</li>
+                        </ul>
+                    </div>
+                    <a href="#booking" class="w-full bg-slate-200 hover:bg-slate-300 text-slate-800 font-semibold py-3 rounded-xl text-center transition">Select Plan</a>
+                </div>
+
+                <!-- Monthly Subscription (Most Popular) -->
+                <div class="bg-white border-2 border-emerald-500 rounded-3xl p-8 flex flex-col justify-between relative shadow-md">
+                    <div class="absolute -top-3 left-1/2 -translate-x-1/2 bg-emerald-600 text-white text-xs font-bold px-3 py-1 rounded-full uppercase tracking-wider">Most Popular</div>
+                    <div>
+                        <span class="text-xs font-semibold text-emerald-600 uppercase tracking-wider">Recurring</span>
+                        <h3 class="text-xl font-bold text-slate-900 mt-1 mb-4">Monthly</h3>
+                        <div class="mb-6">
+                            <span class="text-4xl font-extrabold text-slate-900">$30</span>
+                            <span class="text-slate-500 text-sm"> / clean (2 bins)</span>
+                        </div>
+                        <ul class="space-y-3 text-sm text-slate-600 mb-8">
+                            <li class="flex items-center text-emerald-600 font-semibold"><svg class="w-4 h-4 text-emerald-600 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M5 13l4 4L19 7"></path></svg>First clean is only $19!</li>
+                            <li class="flex items-center"><svg class="w-4 h-4 text-emerald-600 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M5 13l4 4L19 7"></path></svg>Cleaned once a month</li>
+                            <li class="flex items-center"><svg class="w-4 h-4 text-emerald-600 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M5 13l4 4L19 7"></path></svg>Cancel anytime</li>
+                        </ul>
+                    </div>
+                    <a href="#booking" class="w-full bg-emerald-600 hover:bg-emerald-500 text-white font-bold py-3 rounded-xl text-center transition shadow-md">Select Plan</a>
+                </div>
+
+                <!-- Quarterly Subscription -->
+                <div class="bg-slate-50 border border-slate-200 rounded-3xl p-8 flex flex-col justify-between relative shadow-sm hover:shadow-md hover:border-emerald-400 transition">
+                    <div>
+                        <span class="text-xs font-semibold text-slate-500 uppercase tracking-wider">Maintenance</span>
+                        <h3 class="text-xl font-bold text-slate-900 mt-1 mb-4">Quarterly</h3>
+                        <div class="mb-6">
+                            <span class="text-4xl font-extrabold text-slate-900">$30</span>
+                            <span class="text-slate-500 text-sm"> / clean (2 bins)</span>
+                        </div>
+                        <ul class="space-y-3 text-sm text-slate-600 mb-8">
+                            <li class="flex items-center text-emerald-600 font-semibold"><svg class="w-4 h-4 text-emerald-600 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M5 13l4 4L19 7"></path></svg>First clean is only $19!</li>
+                            <li class="flex items-center"><svg class="w-4 h-4 text-emerald-600 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M5 13l4 4L19 7"></path></svg>Cleaned every 3 months</li>
+                            <li class="flex items-center"><svg class="w-4 h-4 text-emerald-600 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M5 13l4 4L19 7"></path></svg>Seasonal deep refresh</li>
+                        </ul>
+                    </div>
+                    <a href="#booking" class="w-full bg-slate-200 hover:bg-slate-300 text-slate-800 font-semibold py-3 rounded-xl text-center transition">Select Plan</a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Interactive Booking Calculator & Form Section (Trash Wallpaper Pattern) -->
+    <section id="booking" class="py-24 trash-pattern-bg border-t border-slate-200">
+        <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center mb-12">
+                <h2 class="text-3xl sm:text-4xl font-extrabold text-slate-900 tracking-tight mb-3">Book Your Bin Cleaning</h2>
+                <p class="text-slate-600">Configure your options below and secure your spot instantly.</p>
+            </div>
+
+            <div class="bg-white border border-slate-200 rounded-3xl p-8 sm:p-10 shadow-xl">
+                <form id="bookingForm" class="space-y-8" onsubmit="handleBooking(event)">
+                    
+                    <!-- Service Type Selection -->
+                    <div>
+                        <label class="block text-sm font-semibold text-slate-900 mb-3">Choose Service Plan</label>
+                        <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                            <label class="border border-slate-300 bg-slate-50/50 p-4 rounded-2xl flex items-center justify-between cursor-pointer hover:border-emerald-500 transition has-[:checked]:border-emerald-600 has-[:checked]:bg-emerald-50/50">
+                                <div class="flex items-center space-x-3">
+                                    <input type="radio" name="plan" value="one-time" class="text-emerald-600 focus:ring-emerald-500 bg-white border-slate-300" checked onchange="updateTotal()">
+                                    <div>
+                                        <span class="block font-bold text-slate-900">One-Time Clean</span>
+                                        <span class="text-xs text-slate-500">$40 for first 2 bins</span>
+                                    </div>
+                                </div>
+                                <span class="font-bold text-emerald-600">$40</span>
+                            </label>
+
+                            <label class="border border-slate-300 bg-slate-50/50 p-4 rounded-2xl flex items-center justify-between cursor-pointer hover:border-emerald-500 transition has-[:checked]:border-emerald-600 has-[:checked]:bg-emerald-50/50">
+                                <div class="flex items-center space-x-3">
+                                    <input type="radio" name="plan" value="subscription" class="text-emerald-600 focus:ring-emerald-500 bg-white border-slate-300" onchange="updateTotal()">
+                                    <div>
+                                        <span class="block font-bold text-slate-900">Subscription (Save More)</span>
+                                        <span class="text-xs text-emerald-600 font-medium">First clean only $19! ($30/clean after)</span>
+                                    </div>
+                                </div>
+                                <span class="font-bold text-emerald-600">$19 1st Clean</span>
+                            </label>
+                        </div>
+                    </div>
+
+                    <!-- Subscription Frequency (Conditional) -->
+                    <div id="subFrequencyBox" class="hidden space-y-3">
+                        <label class="block text-sm font-semibold text-slate-900">Subscription Frequency</label>
+                        <select name="frequency" class="w-full bg-slate-50 border border-slate-300 rounded-xl px-4 py-3 text-slate-900 focus:outline-none focus:border-emerald-500">
+                            <option value="monthly">Monthly ($30 per clean)</option>
+                            <option value="quarterly">Quarterly ($30 per clean)</option>
+                        </select>
+                    </div>
+
+                    <!-- Total Bins Counter -->
+                    <div>
+                        <label class="block text-sm font-semibold text-slate-900 mb-2">Total Bins (Standard 2 Bins Included)</label>
+                        <p class="text-xs text-slate-500 mb-3">Your base price includes up to 2 bins. Additional bins are just +$10 each.</p>
+                        <div class="flex items-center space-x-4">
+                            <button type="button" onclick="adjustBins(-1)" class="w-12 h-12 rounded-xl bg-slate-50 border border-slate-300 text-slate-800 font-bold text-lg hover:bg-slate-100 transition shadow-sm">-</button>
+                            <span id="binCountDisplay" class="text-2xl font-extrabold text-slate-900 w-8 text-center">2</span>
+                            <button type="button" onclick="adjustBins(1)" class="w-12 h-12 rounded-xl bg-slate-50 border border-slate-300 text-slate-800 font-bold text-lg hover:bg-slate-100 transition shadow-sm">+</button>
+                            <span class="text-sm text-slate-500">(<span id="extraBinsText">0</span> additional bins)</span>
+                        </div>
+                    </div>
+
+                    <!-- Neighbor Special Checkbox -->
+                    <div class="bg-emerald-50/60 border border-emerald-200 p-4 rounded-2xl flex items-start space-x-3">
+                        <input type="checkbox" id="neighborSpecial" name="neighborSpecial" class="mt-1 text-emerald-600 focus:ring-emerald-500 bg-white border-slate-300 rounded" onchange="updateTotal()">
+                        <div>
+                            <label for="neighborSpecial" class="font-bold text-slate-900 text-sm block cursor-pointer">Apply Neighbor Special (20% Off)</label>
+                            <p class="text-xs text-slate-600">Check this if 3 or more houses on your street are signing up together.</p>
+                        </div>
+                    </div>
+
+                    <!-- Customer Contact Info -->
+                    <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 pt-2">
+                        <div>
+                            <label class="block text-sm font-semibold text-slate-900 mb-2">Full Name</label>
+                            <input type="text" required placeholder="John Doe" class="w-full bg-slate-50 border border-slate-300 rounded-xl px-4 py-3 text-slate-900 focus:outline-none focus:border-emerald-500">
+                        </div>
+                        <div>
+                            <label class="block text-sm font-semibold text-slate-900 mb-2">Phone Number</label>
+                            <input type="tel" required placeholder="(555) 000-0000" class="w-full bg-slate-50 border border-slate-300 rounded-xl px-4 py-3 text-slate-900 focus:outline-none focus:border-emerald-500">
+                        </div>
+                    </div>
+
+                    <div>
+                        <label class="block text-sm font-semibold text-slate-900 mb-2">Street Address & City</label>
+                        <input type="text" required placeholder="123 Main St" class="w-full bg-slate-50 border border-slate-300 rounded-xl px-4 py-3 text-slate-900 focus:outline-none focus:border-emerald-500">
+                    </div>
+
+                    <!-- Summary & Submit -->
+                    <div class="bg-slate-50 p-6 rounded-2xl border border-slate-200 shadow-sm flex flex-col sm:flex-row items-center justify-between gap-4">
+                        <div>
+                            <span class="text-xs text-slate-500 uppercase tracking-wider block">Estimated Total</span>
+                            <span id="totalPriceDisplay" class="text-3xl font-black text-emerald-600">$40.00</span>
+                        </div>
+                        <button type="submit" class="w-full sm:w-auto bg-emerald-600 hover:bg-emerald-500 text-white font-bold px-8 py-4 rounded-xl shadow-lg shadow-emerald-600/20 transition transform hover:-translate-y-0.5">
+                            Confirm Booking
+                        </button>
+                    </div>
+
+                </form>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="bg-slate-900 text-slate-400 py-12 text-center text-sm">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-4">
+            <p class="font-bold text-white text-base">Bin There, Smelt That</p>
+            <p>Professional residential trash bin cleaning. Keeping your driveway fresh and odor-free.</p>
+            <p class="text-xs text-slate-500">&copy; 2026 Bin There, Smelt That. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <!-- Interactive Scripts -->
+    <script>
+        // Before/After Slider Logic
+        function moveSlider(slider) {
+            const sliderPos = slider.value;
+            const afterImg = document.getElementById('sliderAfter');
+            const handle = document.getElementById('sliderHandle');
+            
+            afterImg.style.width = sliderPos + '%';
+            handle.style.left = sliderPos + '%';
+        }
+
+        // Calculator Logic
+        let binCount = 2;
+
+        function adjustBins(change) {
+            binCount += change;
+            if (binCount < 2) binCount = 2; // Minimum 2 bins included standard
+            document.getElementById('binCountDisplay').innerText = binCount;
+            document.getElementById('extraBinsText').innerText = binCount - 2;
+            updateTotal();
+        }
+
+        document.querySelectorAll('input[name="plan"]').forEach(radio => {
+            radio.addEventListener('change', function() {
+                const subBox = document.getElementById('subFrequencyBox');
+                if (this.value === 'subscription') {
+                    subBox.classList.remove('hidden');
+                } else {
+                    subBox.classList.add('hidden');
+                }
+                updateTotal();
+            });
+        });
+
+        function updateTotal() {
+            const plan = document.querySelector('input[name="plan"]:checked').value;
+            const isNeighborDiscount = document.getElementById('neighborSpecial').checked;
+            
+            let basePrice = 0;
+            let extraBinCost = (binCount - 2) * 10; // $10 per additional bin
+
+            if (plan === 'one-time') {
+                basePrice = 40;
+                if (isNeighborDiscount) {
+                    basePrice = basePrice * 0.8; // 20% off
+                }
+            } else {
+                basePrice = 19; // Introductory first clean for subscribers
+            }
+
+            let total = basePrice + extraBinCost;
+            document.getElementById('totalPriceDisplay').innerText = '$' + total.toFixed(2);
+        }
+
+        function handleBooking(event) {
+            event.preventDefault();
+            alert("Thank you! Your booking request has been submitted successfully. We will reach out shortly to confirm your cleaning time.");
+            document.getElementById('bookingForm').reset();
+            binCount = 2;
+            document.getElementById('binCountDisplay').innerText = 2;
+            document.getElementById('extraBinsText').innerText = 0;
+            document.getElementById('subFrequencyBox').classList.add('hidden');
+            updateTotal();
+        }
+    </script>
+</body>
+</html>
