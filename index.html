@@ -450,34 +450,34 @@
 
         // Form Submission to Google Sheets
         function handleBooking(event) {
-            event.preventDefault();
-            
-            const scriptURL = 'https://script.google.com/macros/s/AKfycbzGO-h9yljLuuFZalAROSijEt3-O8lDbMXa7zGj6NZ3rXoa7gQCo7yG08rox-oXuy70/exec'; 
-            const form = document.getElementById('bookingForm');
-            const submitButton = form.querySelector('button[type="submit"]');
-            
-            submitButton.disabled = true;
-            submitButton.innerText = 'Submitting...';
+    event.preventDefault(); // Prevents the page from actually navigating away
 
-        fetch(scripturl, { method: 'POST', body: new FormData(form)})
-    .then(response => {
-        confetti({
-            particleCount: 100,
-            spread: 70,
-            origin: { y: 0.6 }
-        });
+    const form = document.getElementById('bookingForm');
+    const submitButton = form.querySelector('button[type="submit"]');
 
-        alert("Your stinky bin thanks you. Booking received! We'll reach out shortly to rescue you from the stench and confirm your clean.");
-        
-        form.reset();
-        binCount = 2;
-        document.getElementById('binCountDisplay').innerText = 2;
-        document.getElementById('extraBinsText').innerText = 0;
-        document.getElementById('subFrequencyBox').classList.add('hidden');
-        updateTotal();
-        submitButton.disabled = false;
-        submitButton.innerText = 'Confirm Booking';
-    })
+    // Trigger the confetti explosion!
+    confetti({
+        particleCount: 100,
+        spread: 70,
+        origin: { y: 0.6 }
+    });
+
+    // Show your custom success alert instantly
+    alert("Your stinky bin thanks you. Booking received! We'll reach out shortly to rescue you from the stench and confirm your clean.");
+    
+    // Actually submit the form data to the hidden iframe/Google Sheet in the background
+    form.submit();
+
+    // Reset the form and button right away
+    form.reset();
+    binCount = 2;
+    document.getElementById('binCountDisplay').innerText = 2;
+    document.getElementById('extraBinsText').innerText = 0;
+    document.getElementById('subFrequencyBox').classList.add('hidden');
+    updateTotal();
+    submitButton.disabled = false;
+    submitButton.innerText = 'Confirm Booking';
+}
     .catch(error => {
         console.error('Error!', error.message);
         confetti({
