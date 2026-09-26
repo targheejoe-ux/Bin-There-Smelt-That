@@ -448,36 +448,37 @@
             document.getElementById('hiddenTotalPrice').value = '$' + total.toFixed(2);
         }
 
-        // Form Submission with Confetti and Instant Success
+        // Form Submission to Google Sheets
 function handleBooking(event) {
-    event.preventDefault(); // Prevents page reload
+    event.preventDefault();
 
+    const scriptURL = 'https://script.google.com/macros/s/AKfycbyG1BXvKdWdIe96nUGjF0POMX5JuDMFKA11x_AatrobVsjSFPa4w1YLuGUzT_pLKarP/exec';
     const form = document.getElementById('bookingForm');
     const submitButton = form.querySelector('button[type="submit"]');
 
-    // 1. Trigger the confetti explosion!
-    confetti({
-        particleCount: 100,
-        spread: 70,
-        origin: { y: 0.6 }
-    });
+    submitButton.disabled = true;
+    submitButton.innerText = 'Submitting...';
 
-    // 2. Show your custom success alert instantly
-    alert("Your stinky bin thanks you. Booking received! We'll reach out shortly to rescue you from the stench and confirm your clean.");
-    
-    // 3. Silently push data to your Google Sheet in the background
-    form.submit();
-
-    // 4. Reset the form and button right away
-    form.reset();
-    binCount = 2;
-    document.getElementById('binCountDisplay').innerText = 2;
-    document.getElementById('extraBinsText').innerText = 0;
-    document.getElementById('subFrequencyBox').classList.add('hidden');
-    updateTotal();
-    submitButton.disabled = false;
-    submitButton.innerText = 'Confirm Booking';
+    fetch(scriptURL, { method: 'POST', body: new FormData(form)})
+        .then(response => {
+            alert("Thank you! Your booking request has been submitted successfully. We will reach out shortly to confirm your cleaning time.");
+            form.reset();
+            binCount = 2;
+            document.getElementById('binCountDisplay').innerText = 2;
+            document.getElementById('extraBinsText').innerText = 0;
+            document.getElementById('subFrequencyBox').classList.add('hidden');
+            updateTotal();
+            submitButton.disabled = false;
+            submitButton.innerText = 'Confirm Booking';
+        })
+        .catch(error => {
+            console.error('Error!', error.message);
+            alert("There was an error submitting your booking. Please try again.");
+            submitButton.disabled = false;
+            submitButton.innerText = 'Confirm Booking';
+        });
 }
+You can swap this back into your script section if you want to test from a clean baseline!
     </script>
 </body>
 </html>
