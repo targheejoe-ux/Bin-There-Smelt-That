@@ -460,6 +460,12 @@
 
             fetch(scriptURL, { method: 'POST', body: new FormData(form)})
                 .then(response => {
+                    // Trigger the confetti explosion!
+        confetti({
+            particleCount: 100,
+            spread: 70,
+            origin: { y: 0.6 }
+        });
                     alert("Your stinky bin thanks you! We'll be in touch shortly to give those tragic cans the spa day they desperately deserve.");
                     form.reset();
                     binCount = 2;
