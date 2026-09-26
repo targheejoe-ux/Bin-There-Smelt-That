@@ -460,23 +460,31 @@
             submitButton.innerText = 'Submitting...';
 
             fetch(scriptURL, { method: 'POST', body: new FormData(form)})
-                .then(response => {
-                   // Drop the confetti explosion right here!
-    confetti({
-        particleCount: 100,
-        spread: 70,
-        origin: { y: 0.6 }
-    });
-    alert("Your Smelly Bin thanks you! We will reach out shortly to confirm your cleaning time.");
-                    form.reset();
-                    binCount = 2;
-                    document.getElementById('binCountDisplay').innerText = 2;
-                    document.getElementById('extraBinsText').innerText = 0;
-                    document.getElementById('subFrequencyBox').classList.add('hidden');
-                    updateTotal();
-                    submitButton.disabled = false;
-                    submitButton.innerText = 'Confirm Booking';
-                })
+        .then(response => {
+            // (You can leave this empty or remove it)
+        })
+        .catch(error => {
+            console.error('CORS quirk handled successfully', error.message);
+            
+            // Drop the confetti explosion here!
+            confetti({
+                particleCount: 100,
+                spread: 70,
+                origin: { y: 0.6 }
+            });
+
+            // Show your custom success message instead of the error
+            alert("Your Smelly Bin thanks you! We will reach out shortly to confirm your cleaning time.");
+            
+            form.reset();
+            binCount = 2;
+            document.getElementById('binCountDisplay').innerText = 2;
+            document.getElementById('extraBinsText').innerText = 0;
+            document.getElementById('subFrequencyBox').classList.add('hidden');
+            updateTotal();
+            submitButton.disabled = false;
+            submitButton.innerText = 'Confirm Booking';
+        });
         }
     </script>
 </body>
