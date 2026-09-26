@@ -447,38 +447,36 @@
             document.getElementById('hiddenBinCount').value = binCount;
             document.getElementById('hiddenTotalPrice').value = '$' + total.toFixed(2);
         }
+     // Form Submission to Google Sheets
+        function handleBooking(event) {
+            event.preventDefault();
+            
+            const scriptURL = 'https://script.google.com/macros/s/AKfycbzGO-h9yljLuuFZalAROSijEt3-O8lDbMXa7zGj6NZ3rXoa7gQCo7yG08rox-oXuy70/exec'; 
+            const form = document.getElementById('bookingForm');
+            const submitButton = form.querySelector('button[type="submit"]');
+            
+            submitButton.disabled = true;
+            submitButton.innerText = 'Submitting...';
 
-        // Form Submission to Google Sheets
-function handleBooking(event) {
-    event.preventDefault();
-
-    const scriptURL = 'https://script.google.com/macros/s/AKfycbyG1BXvKdWdIe96nUGjF0POMX5JuDMFKA11x_AatrobVsjSFPa4w1YLuGUzT_pLKarP/exec';
-    const form = document.getElementById('bookingForm');
-    const submitButton = form.querySelector('button[type="submit"]');
-
-    submitButton.disabled = true;
-    submitButton.innerText = 'Submitting...';
-
-    fetch(scriptURL, { method: 'POST', body: new FormData(form)})
-        .then(response => {
-            alert("Thank you! Your booking request has been submitted successfully. We will reach out shortly to confirm your cleaning time.");
-            form.reset();
-            binCount = 2;
-            document.getElementById('binCountDisplay').innerText = 2;
-            document.getElementById('extraBinsText').innerText = 0;
-            document.getElementById('subFrequencyBox').classList.add('hidden');
-            updateTotal();
-            submitButton.disabled = false;
-            submitButton.innerText = 'Confirm Booking';
-        })
-        .catch(error => {
-            console.error('Error!', error.message);
-            alert("There was an error submitting your booking. Please try again.");
-            submitButton.disabled = false;
-            submitButton.innerText = 'Confirm Booking';
-        });
-}
-You can swap this back into your script section if you want to test from a clean baseline!
+            fetch(scriptURL, { method: 'POST', body: new FormData(form)})
+                .then(response => {
+                    alert("Your stinky bin thanks you! We'll be in touch shortly to give those tragic cans the spa day they desperately deserve.");
+                    form.reset();
+                    binCount = 2;
+                    document.getElementById('binCountDisplay').innerText = 2;
+                    document.getElementById('extraBinsText').innerText = 0;
+                    document.getElementById('subFrequencyBox').classList.add('hidden');
+                    updateTotal();
+                    submitButton.disabled = false;
+                    submitButton.innerText = 'Confirm Booking';
+                })
+                .catch(error => {
+                    console.error('Error!', error.message);
+                    alert("There was an error submitting your booking. Please try again.");
+                    submitButton.disabled = false;
+                    submitButton.innerText = 'Confirm Booking';
+                });
+        }
     </script>
 </body>
 </html>
