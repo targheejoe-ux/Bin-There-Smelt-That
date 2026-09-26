@@ -459,9 +459,8 @@
             submitButton.disabled = true;
             submitButton.innerText = 'Submitting...';
 
-            fetch(scriptURL, { method: 'POST', body: new FormData(form)})
+        fetch(scripturl, { method: 'POST', body: new FormData(form)})
     .then(response => {
-        // Trigger the confetti explosion!
         confetti({
             particleCount: 100,
             spread: 70,
@@ -481,8 +480,6 @@
     })
     .catch(error => {
         console.error('Error!', error.message);
-        // Even if a CORS quirk happens, Google often still receives the data. 
-        // Let's force it to show success so it doesn't give your clients an error message:
         confetti({
             particleCount: 100,
             spread: 70,
