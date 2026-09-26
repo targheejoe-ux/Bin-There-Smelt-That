@@ -478,26 +478,6 @@ function handleBooking(event) {
     submitButton.disabled = false;
     submitButton.innerText = 'Confirm Booking';
 }
-    .catch(error => {
-        console.error('Error!', error.message);
-        confetti({
-            particleCount: 100,
-            spread: 70,
-            origin: { y: 0.6 }
-        });
-        
-        alert("Your stinky bin thanks you. Booking received! We'll reach out shortly to rescue you from the stench and confirm your clean.");
-        
-        form.reset();
-        binCount = 2;
-        document.getElementById('binCountDisplay').innerText = 2;
-        document.getElementById('extraBinsText').innerText = 0;
-        document.getElementById('subFrequencyBox').classList.add('hidden');
-        updateTotal();
-        submitButton.disabled = false;
-        submitButton.innerText = 'Confirm Booking';
-    });
-        }
     </script>
 </body>
 </html>
