@@ -455,30 +455,20 @@ function handleBooking(event) {
     const form = document.getElementById('bookingForm');
     const submitButton = form.querySelector('button[type="submit"]');
 
-    // 1. Ensure/trigger confetti safely
+    // 1. Trigger the confetti explosion immediately!
     if (typeof confetti === 'function') {
         confetti({
             particleCount: 100,
             spread: 70,
             origin: { y: 0.6 }
         });
-    } else {
-        // Fallback: load it on the fly if it hasn't initialized yet
-        const script = document.createElement('script');
-        script.src = 'https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.min.js';
-        script.onload = () => {
-            confetti({
-                particleCount: 100,
-                spread: 70,
-                origin: { y: 0.6 }
-            });
-        };
-        document.head.appendChild(script);
     }
 
-    // 2. Show your custom success message
-    alert("Your Smelly Bin thanks you! We will reach out shortly to confirm your cleaning time.");
-    
+    // 2. Delay the alert by a tiny fraction of a second so the confetti can render first
+    setTimeout(() => {
+        alert("Your Smelly Bin thanks you! We will reach out shortly to confirm your cleaning time.");
+    }, 150);
+
     // 3. Silently push data to your Google Sheet in the background
     form.submit();
 
