@@ -461,7 +461,13 @@
 
             fetch(scriptURL, { method: 'POST', body: new FormData(form)})
                 .then(response => {
-                    alert("Your Smelly Bin thanks you! We will reach out shortly to confirm your cleaning time.");
+                   // Drop the confetti explosion right here!
+    confetti({
+        particleCount: 100,
+        spread: 70,
+        origin: { y: 0.6 }
+    });
+    alert("Your Smelly Bin thanks you! We will reach out shortly to confirm your cleaning time.");
                     form.reset();
                     binCount = 2;
                     document.getElementById('binCountDisplay').innerText = 2;
